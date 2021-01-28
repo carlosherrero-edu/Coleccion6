@@ -496,14 +496,40 @@ public class Utilidades {
 		return varianza;
 	}
 	 
-	 public static double deGradosARadianes (int grados, int minutos, int segundos) {
-		 //TODO
-		 return 0;
+	 /**
+	  * Función para convertir de grados a radianes
+	 * @param grados grados de circunferencia
+	 * @param minutos minutos de circunferencia, entre 0 y 59
+	 * @param segundos  segundos de circunferencia, entre 0 y 59
+	 * @return valor equivalente del ángulo en radianes
+	 */
+	public static double deGradosARadianes (int grados, int minutos, int segundos) {
+		 final double CONVERSION=60.0;
+		 double angulo= grados+ minutos/CONVERSION + segundos/Math.pow(CONVERSION, 2);
+		 return (angulo*2*Math.PI / 360.0);
 	 }
 	 
-	 public static int[] deRadianesAGrados (double radianes) {
-		 //TODO
-		 return null;
+	 
+	 /**
+	  * Función para convertir  de radianes a grados de circunferencia
+	 * @param radianes valor del ángulo en radianes
+	 * @return array con 3 enteros indicando los grados, minutos y segundos del ángulo equivalente
+	 */
+	public static int[] deRadianesAGrados (double radianes) {
+		 final int CONVERSION=60;
+		int angulo;
+		int[] resultado=new int[3];
+		//pasamos los radianes a segundos de arco, para poder empezar a calcular 
+		angulo= (int)(360*CONVERSION*CONVERSION*radianes/(2*Math.PI));
+		//obtenemos los segundos
+		resultado[2] = angulo%CONVERSION; //segundos de arco
+		angulo = angulo / CONVERSION;
+		//obtenemos los minutos
+		resultado[1] = angulo%CONVERSION; //minutos
+		//lo que queda son los grados
+		resultado[0]= angulo /CONVERSION;
+	
+		 return resultado;
 	 }
 	
 	
