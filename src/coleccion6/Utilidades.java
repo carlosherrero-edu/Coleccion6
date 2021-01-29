@@ -533,5 +533,49 @@ public class Utilidades {
 	 }
 	
 	
+	/**
+	 * Función para buscar la posición en que se encuentra un nombre en una lista de nombres
+	 * Si la lista está ordenada, utilizamso el algoritmo de búsqueda binaria
+	 * Si no está ordenada, usamos búsqueda secuencial en la lista
+	 * @param nombres  array con la lista de nombres en los que vamos a buscar
+	 * @param buscado  cadena/nombre que buscamos en la lista
+	 * @param ordenada true si la lista está ordenada, false en otro caso
+	 * @return primera posición donde se encuentra el nombre buscado, o <0 si no se encuentra
+	 */
+	public static int buscarNombre (String[] nombres, String buscado, boolean ordenada) {
+		int posicion;
+		//cadena buscada en mayúscula y sin espacios
+		String buscadoM = buscado.toUpperCase().trim();
+		if (ordenada) {
+			//realizamos la búsqueda binaria que ya viene integrada en Arrays
+			//generamos un array nombresM con todos los nombres en mayúscula y sin espacios finales
+			String[] nombresM= new String[nombres.length];
+			for (int i=0; i<nombres.length; i++) {
+				nombresM[i] = nombres[i].toUpperCase().trim();
+			}
+			//ahora llamamos al método de la clase Arrays
+			posicion= Arrays.binarySearch(nombresM, buscadoM);
+			
+		} else {
+			//hacemos búsqueda secuencial hasta que lo encontremos o acabemos la lista
+			boolean encontrado=false;
+			int contador=0;
+			while (!encontrado && contador<nombres.length) {
+				if (nombres[contador].trim().equalsIgnoreCase(buscadoM)) {
+					encontrado=true;
+				} else {
+					contador++;
+				}
+			} //fin del while
+			if (encontrado) {
+				posicion= contador;
+			} else {
+				posicion=-1;
+			}
+		} //fin de la búsqueda no ordenada
+		return posicion;
+	}
+	
+	
 
 }
