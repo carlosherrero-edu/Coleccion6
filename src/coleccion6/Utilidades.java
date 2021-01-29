@@ -202,55 +202,9 @@ public class Utilidades {
 	 */
 	public static int[] apuestaPrimitiva() {
 		 //array donde guardaremos la apuesta
-		int[] numeros = new int[7];
-		 int apuesta;
-		 boolean repetido;
-		 //objeto para generar números aleatorios 
-		 SecureRandom aleatorio= new SecureRandom();
-		 
-		 //calculamos primero las apuestas de 1-49
-		 for (int i=0; i<6; i++){
-			 //para cada posición, buscamos un nuevo número aleatorio que no esté ya en la lista
-			 do{
-				//extraemos un número aleatorio entre 1 y 49
-				 apuesta= aleatorio.nextInt(49)+1 ; 
-				 //comprobamos que no se repite en los términos anteriores, llamando al método estaEnLista
-				 repetido= estaEnLista(numeros, apuesta);
-				 
-			} while (repetido);
-			 /*cuando abandonemos el bucle do-while, significa que el número tomado aleatoriamente
-			  * es diferente de todos los que hemos extraído antes, por lo que lo guardamos
-			  */
-			 numeros[i] = apuesta;
-			 
-		 } //fin del bucle for
-		 
-		 //el séptimo término es aleatorio entre 0 y 9
-		 numeros[6]= aleatorio.nextInt(10);
-		 
-		 return numeros;
+		return null;
 	}
 	
-	/**
-	 * Método auxiliar para saber si un número está ya presente en una lista
-	 * @param lista
-	 * @param buscado
-	 * @return true si el número está ya en la lista, false en caso contrario
-	 */
-	static boolean estaEnLista (int[] lista, int buscado) {
-		
-		boolean encontrado= false;
-		
-		int posicion=0;
-		while (!encontrado && posicion < lista.length) {
-			if (lista[posicion]==buscado) {
-				encontrado=true;
-			}
-			posicion++;
-		}
-		
-		return encontrado;
-	}
 
 	/**
 	 * Función para obtener una apuesta aleatoria a la quiniela, pero controlando cuántos resultados de cada tipo queremos obtener
@@ -262,64 +216,8 @@ public class Utilidades {
 	 * Corresponde al ejercicio 10 de la Colección 6
 	 */
 	public static char[] apuestaQuiniela(int unos, int equis, int doses) {
-		//llamamos al método de validación de la apuesta
-		if (validarApuestaQuiniela (unos, equis, doses)) {
-		
-			char [] apuesta= new char[14];
-			
-			//contadadores con la cantidad de resultados de cada tipo que llevamos extraídos
-			int num_1=0, num_x=0, num_2=0;
-			int numero; //número aleatorio que iremos extrayendo
-			boolean repetir;
-		
-			
-			SecureRandom azar= new SecureRandom ();
-			
-			for (int i=0; i<14; i++){
-				
-				do {
-					repetir = false;
-					numero = azar.nextInt(3);  //número aleatorio entre 0 y 2
-					
-					//según cual sea el resultado, comprobamos si hemos sobrepasado la cantidad máxima pedida
-					switch (numero) {
-						case 0 -> {
-							if (num_x < equis) {
-								num_x++;
-							} else {
-								repetir=true;
-							}
-						}
-						case 1 -> {
-								if (num_1 < unos) {
-									num_1++;
-								} else {
-									repetir=true;
-								}
-							}
-						case 2 -> {
-							if (num_2 < doses) {
-								num_2++;
-							} else {
-								repetir=true;
-							}
-						}
-					
-					} //fin del switch
-					
-			
-					
-				} while (repetir);
-				//guardamos el carácter correspondiente a la apuesta
-				apuesta[i] = numero==0 ? 'X': (numero==1 ? '1' : '2');
-			
-			} //fin del for
-			return apuesta;
-		}  else {
-			//la apuesta no es válida
-			return null;
-		}
 
+			return null;
 	
 	}
 	
@@ -354,11 +252,7 @@ public class Utilidades {
 	 */
 	public static char letraNIF (int dni) {
 		
-		//aunque se puede plantear con un array de caracteres, es más sencillo tomar la posición de un String
-		
-		final String LETRAS="TRWAGMYFPDXBNJZSQVHCKE";  //letras que corresponden a cada valor del resto
-		
-		return LETRAS.charAt(dni%23);
+		return 'x';
 	}
 	
 	/**
@@ -371,30 +265,7 @@ public class Utilidades {
 	public static char letraNIE (String nie) {
 		
 		
-		int dni;
-		
-		// convertimos la letra inicial del NIE en el dígito establecido por la autoridad que diseñó el sistema
-		switch (nie.charAt(0)){
-			case 'X' -> {
-				dni= Integer.parseInt("0"+ nie.substring(1));
-				}
-			case 'Y' -> {
-				dni= Integer.parseInt("1"+ nie.substring(1));
-			}
-			case 'Z' -> {
-				dni= Integer.parseInt("2"+ nie.substring(1));
-			}case 'A' -> {
-				dni= Integer.parseInt("3"+ nie.substring(1));
-			}
-			default ->{
-				//si no es un valor válido, devolvemos el carácter unicode "nulo"
-				return '\u0000';
-			}
-			
-		}
-		
-		return letraNIF(dni);
-		
+		return 'x';
 	}
 	
 	/**
@@ -413,88 +284,11 @@ public class Utilidades {
 	 */
 	public static double[] estadisticaLista (double[] lista) {
 		
-		double [] resultado = new double[6];
-		
-		if (lista!= null) {
-			
-			//ordenamos la lista de menor a mayor, con los métodos de la clase Arrays
-			Arrays.sort(lista);
-			
-			resultado[0]= lista.length;
-			resultado[1] = lista[0];  //el menor es el primer elemento de la lista ordenada
-			resultado[2] = lista[ lista.length-1];  //el mayor es el último elemento de la lista ordenada
-			resultado[3] = calcularModa(lista);
-			resultado[4] = promedioArray(lista);
-			resultado[5] = calcularVarianza(lista);
-		}
-				
-		return resultado;		
+		return null;
 	
 	}
 	
-	/**
-	 * Método para calcular la moda, o valor que más se repite en una lista
-	 * @param lista lista de números (enteros o decimales) como entrada de datos
-	 * @return moda, o el valor que más se repite en la lista (si hay más de un valor con ese número de repeticiiones, el valor más pequeño)
-	 * @see cuentaRepeticiones
-	 */
-	 static double calcularModa (double[] lista) {
-		
-		double moda=lista[0];
-		int frecuencia_max=0;  //valores iniciales
-		
-		int frecuencia;
-		// en un futuro, cuando conozcamos las colecciones y los Set, podremos resolverlo de forma más eficiente
-		for (int i=0; i<lista.length; i++) {
-			frecuencia= cuentaRepeticiones(lista, lista[i]);
-			if (frecuencia> frecuencia_max && lista[i] <= moda){
-				moda = lista[i];
-				frecuencia_max=frecuencia;
-				
-			}
-			
-		} //fin del bucle for
-		return moda;
-	}
 	
-	/**
-	 * Metodo para contar cuántas veces se repite un elemento en una lista
-	 * @param lista lista de números (enteros o decimales) como entrada de datos
-	 * @param elemento valor del que contaremos el número de repeticiones
-	 * @return número de repeticiones del elemento en la lista
-	 */
-	static int cuentaRepeticiones( double[] lista, double elemento) {
-		
-		int contador=0;
-		for (double valor: lista) {
-			if ( valor==elemento) {
-				contador++;
-			}
-		}
-		return contador;
-	}
-	
-	 /**
-	  * Método para calcular la varianza de una lista numérica
-	 * @param lista lista lista de números (enteros o decimales) como entrada de datos
-	 * @return valor de la varianza, o diferencia entre la media de los cuadrados y el cuadrado de la media
-	 * @see promedioArray
-	 */
-	static double calcularVarianza (double[] lista) {
-		 
-		 double varianza;
-		 //generamos un array con los cuadrados de cada elemento de la lista
-		 double[] listaCuadrados= new double [lista.length];
-		 
-		 for (int i=0; i<lista.length; i++) {
-			 listaCuadrados[i]= Math.pow(lista[i], 2);
-			 
-		}
-		 //aplicamos la fórmula de cálculo de la varianza
-		varianza= promedioArray(listaCuadrados) - Math.pow( promedioArray(lista),2);
-		
-		return varianza;
-	}
 	 
 	 /**
 	  * Función para convertir de grados a radianes
@@ -504,9 +298,7 @@ public class Utilidades {
 	 * @return valor equivalente del ángulo en radianes
 	 */
 	public static double deGradosARadianes (int grados, int minutos, int segundos) {
-		 final double CONVERSION=60.0;
-		 double angulo= grados+ minutos/CONVERSION + segundos/Math.pow(CONVERSION, 2);
-		 return (angulo*2*Math.PI / 360.0);
+		 return 0;
 	 }
 	 
 	 
@@ -516,20 +308,7 @@ public class Utilidades {
 	 * @return array con 3 enteros indicando los grados, minutos y segundos del ángulo equivalente
 	 */
 	public static int[] deRadianesAGrados (double radianes) {
-		 final int CONVERSION=60;
-		int angulo;
-		int[] resultado=new int[3];
-		//pasamos los radianes a segundos de arco, para poder empezar a calcular 
-		angulo= (int)(360*CONVERSION*CONVERSION*radianes/(2*Math.PI));
-		//obtenemos los segundos
-		resultado[2] = angulo%CONVERSION; //segundos de arco
-		angulo = angulo / CONVERSION;
-		//obtenemos los minutos
-		resultado[1] = angulo%CONVERSION; //minutos
-		//lo que queda son los grados
-		resultado[0]= angulo /CONVERSION;
-	
-		 return resultado;
+		 return null;
 	 }
 	
 	
@@ -543,37 +322,7 @@ public class Utilidades {
 	 * @return primera posición donde se encuentra el nombre buscado, o <0 si no se encuentra
 	 */
 	public static int buscarNombre (String[] nombres, String buscado, boolean ordenada) {
-		int posicion;
-		//cadena buscada en mayúscula y sin espacios
-		String buscadoM = buscado.toUpperCase().trim();
-		if (ordenada) {
-			//realizamos la búsqueda binaria que ya viene integrada en Arrays
-			//generamos un array nombresM con todos los nombres en mayúscula y sin espacios finales
-			String[] nombresM= new String[nombres.length];
-			for (int i=0; i<nombres.length; i++) {
-				nombresM[i] = nombres[i].toUpperCase().trim();
-			}
-			//ahora llamamos al método de la clase Arrays
-			posicion= Arrays.binarySearch(nombresM, buscadoM);
-			
-		} else {
-			//hacemos búsqueda secuencial hasta que lo encontremos o acabemos la lista
-			boolean encontrado=false;
-			int contador=0;
-			while (!encontrado && contador<nombres.length) {
-				if (nombres[contador].trim().equalsIgnoreCase(buscadoM)) {
-					encontrado=true;
-				} else {
-					contador++;
-				}
-			} //fin del while
-			if (encontrado) {
-				posicion= contador;
-			} else {
-				posicion=-1;
-			}
-		} //fin de la búsqueda no ordenada
-		return posicion;
+		return -1;
 	}
 	
 	
